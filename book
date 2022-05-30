@@ -1,0 +1,188 @@
+cpp
+
+#include "book.h"
+using namespace std;
+
+book::book()
+{
+
+	this->author = nullptr;
+	this->name = nullptr;
+	this->number_pages = 0;
+	this->publishing_house = nullptr;
+	this->year = 0;
+}
+
+book::book(const book& tmp)                            // конструктор копирования данных в другой объект tmp
+{
+	cout << "Сработал конструктор коипрования" << endl;
+	this->number_pages = tmp.number_pages;                       
+	this->year = tmp.year;
+
+	size_t SIZE = strlen(tmp.author);                           // переменная хранящая размер строки авторов
+	this->author = new char[SIZE];                     // выделили новую память. куда будем копировать     
+	strcpy_s(this->author, SIZE, tmp.author);
+
+	SIZE = strlen(tmp.name);
+	this->name = new char[SIZE];
+	strcpy_s(this->name, SIZE, tmp.name);
+
+	SIZE = strlen(tmp.publishing_house);
+	this->publishing_house = new char[SIZE];
+	strcpy_s(this->publishing_house, SIZE, tmp.publishing_house);
+}
+
+book::book(const char* author, const char* name, const char* publishing_house, unsigned short year, unsigned short number_pages)
+{
+	size_t SIZE = strlen(author);
+	this->author = new char[SIZE];
+	strcpy_s(this->author, SIZE, author);
+
+	SIZE = strlen(name);
+	this->name = new char[SIZE + 1];
+	strcpy_s(this->name, SIZE + 1, name);
+
+	SIZE = strlen(publishing_house);
+	this->publishing_house = new char[SIZE + 1];
+	strcpy_s(this->publishing_house, SIZE + 1, publishing_house);
+
+	this->year = year;
+	this->number_pages = number_pages;
+	
+}
+
+book::book(unsigned short number_pages)
+{
+	this->number_pages = number_pages;
+}
+
+void book::init(const char* author, const char* name, const char* publishing_house, unsigned short year, unsigned short number_pages)
+{
+	size_t size = strlen(author);
+	this->author = new char[size + 1];
+	strcpy_s(this->author, size + 1, author);
+
+	size = strlen(name);
+	this->name = new char[size + 1];
+	strcpy_s(this->name, size + 1, name);
+
+	size = strlen(publishing_house);
+	this->publishing_house = new char[size + 1];
+	strcpy_s(this->publishing_house, size + 1, publishing_house);
+
+	this->year = year;
+	this->number_pages = number_pages;
+}
+
+void book::show() const
+{
+	cout << author << endl;
+	cout << name << endl;
+	cout << publishing_house << endl;
+	cout << year << endl;
+	cout << number_pages << endl;
+}
+
+void book::show_by_author(const char* author)
+{
+	
+	/*size_t size = strlen(author);
+	char* ptr_author = new char[size];
+	ptr_author = this->author;
+	cout << ptr_author << endl;
+	if (ptr_author == author && name == this->name)
+		cout << name << endl;*/
+	
+		
+}
+void book::show_by_publishing_house(const char* publishing_house)
+{
+
+	size_t size = strlen(publishing_house);
+	char* ptr_publishing_house = new char[size + 1];                 // новый указатель на новую область памяти 
+	ptr_publishing_house = this->publishing_house;              // присваиваем в новый указатель указатель старый пабл
+	cout << ptr_publishing_house << endl;
+	//if (*ptr_publishing_house == set_author(author))
+	//{
+	////	publishing_house = get_name();
+	//	//cout << get_name() << endl;
+	//}
+		
+
+}
+void book::show_by_year(unsigned short year)
+{
+	cout << this->name << endl;
+}
+
+void book::set_author(const char* author)
+{
+	cout << "setter" << endl;
+	size_t SIZE = strlen(author);
+	char* ptr_author = new char[SIZE];
+	strcpy_s(ptr_author, SIZE, author);
+}
+
+void book::set_name(const char* name)
+{
+	size_t SIZE = strlen(name);
+	char* ptr_name = new char[SIZE];
+	strcpy_s(ptr_name, SIZE, name);
+}
+
+void book::set_publishing_house(const char* publishing_house)
+{
+	size_t SIZE = strlen(publishing_house);
+	char* ptr_publishing_house = new char[SIZE];
+	strcpy_s(ptr_publishing_house, SIZE, publishing_house);
+}
+
+void book::set_year(unsigned short year)
+{
+	this->year = year;
+}
+
+void book::set_number_pages(unsigned short number_pages)
+{
+	this->number_pages = number_pages;
+}
+
+const char* book::get_author() const
+{
+	return this->author;
+}
+
+const char* book::get_name() const
+{
+	return this->name;
+}
+
+const char* book::get_publishing_house() const
+{
+	return this->publishing_house;
+}
+
+unsigned short book::get_year() const
+{
+	return this->year;
+}
+
+unsigned short book::get_number_pages() const
+{
+	return this->number_pages;
+}
+book::~book()
+{
+	if (author)
+	{
+		delete[] author;
+	}
+	if (name)
+	{
+		delete[] name;
+	}
+	if (publishing_house)
+	{
+		delete[] publishing_house;
+	}
+}
