@@ -1,0 +1,148 @@
+//http://www.cplusplus.com/reference/string/string/
+//https://msdn.microsoft.com/ru-ru/library/system.string(v=vs.110).aspx?cs-save-lang=1&cs-lang=cpp#code-snippet-1
+//Тема: Шаблоны функций Задание.Реализуйте шаблонные функции для поиска максимума,
+//минимума, сортировки массива(любым алгоритмом сортировки), двоичного поиска в
+//массиве, замены элемента массива на переданное значение.
+#include <iostream>
+#include <string>
+#include <iostream>
+#include <fstream>
+#include <sstream>
+using namespace std;
+
+template <typename MyType>
+void printArray(const MyType* array, int count)
+{
+	for (int ix = 0; ix < count; ix++)
+		cout << array[ix] << "   ";
+	cout << endl;
+}
+
+// максимум минимум
+
+template <typename T>
+void min_max(const T* array, int count)
+{
+	T temp = 0;
+	T temp2 = 0;
+	T min = array[0];
+	T max = array[count - 1];
+	for (int ix = 0; ix < count; ix++)
+		if (array[ix] > min)
+			temp = array[ix];
+		else if (array[ix] < max)
+			temp2 = array[ix];
+	cout << "Maximum: " << temp << endl;
+	cout << "Minimum: " << temp2 << endl;
+}
+
+// двоичный поиск
+template <typename T>
+int binary_search(const T* arr, T value, int size)
+{
+	T low = 0;                                // начало массива 
+	T high = size - 1;                     // конец массива
+	while (low < high)
+	{
+		T mid = (low + high) / 2;
+		if (value == arr[mid])
+		{
+			cout << "Value " << value << " Is located in index: " << mid << endl;
+			return 0;
+		}
+		else if (value > arr[mid])
+		{
+			low = mid + 1;
+		}
+		else
+			high = mid - 1;
+	}
+	return 1;
+}
+
+// замена элемента в массиве
+template <typename T>
+void change_(T *arr, T value, int pozition, int size)
+{
+
+	for (int i = 0; i < size; i++)
+	{
+		if (i == pozition)
+		{
+			arr[i] = value;
+		}
+		cout << arr[i] << " " ;
+	}
+	cout << endl;
+}
+
+// bubble sort
+template <typename T>
+void bubbleSort(T* data, int size)
+{
+	int tmp = 0;
+	for (int i = 0; i < size; i++) {
+		for (int j = (size - 1); j >= (i + 1); j--) {
+			if (data[j] < data[j - 1]) {
+				tmp = data[j];
+				data[j] = data[j - 1];
+				data[j - 1] = tmp;
+
+			}
+
+		}
+		cout << data[i] << " " ;
+	}
+	cout << endl;
+}
+
+int main()
+{
+	setlocale(LC_ALL, "RUSSIAN");
+	// размеры массивов
+	const int iSize = 10,
+		dSize = 7,
+		fSize = 10,
+		cSize = 5;
+	// массивы разных типов данных
+	int    iArray[iSize] = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	double dArray[dSize] = { 1.2345, 2.234, 3.57, 4.67876, 5.346, 6.1545, 7.7682 };
+	float  fArray[fSize] = { 1.34, 2.37, 3.23, 4.8, 5.879, 6.345, 73.434, 8.82, 9.33, 10.4 };
+	char   cArray[cSize] = { "MARS" };
+
+	cout << "\t\tPattern of function of an output of an array on the screen\n\n";
+	// вызов локальной версии функции printArray для типа int через шаблон
+	cout << "\n Array type int:\n"; printArray(iArray, iSize);
+
+	// вызов локальной версии функции printArray для типа double через шаблон
+	cout << "\n Array type double:\n"; printArray(dArray, dSize);
+
+	// вызов локальной версии функции printArray для типа float через шаблон
+	cout << "\n Array type float:\n"; printArray(fArray, fSize);
+
+	// вызов локальной версии функции printArray для типа char через шаблон
+	cout << "\n Array type char:\n"; printArray(cArray, cSize);
+	cout << "Поиск максимума, минимума: " << endl;
+	min_max(iArray, iSize);
+	min_max(dArray, dSize);
+	min_max(fArray, fSize);
+
+	cout << "Двоичный поиск: " << endl;
+	binary_search(iArray, 5, iSize);
+	binary_search(dArray, 3.57, dSize);
+	binary_search(fArray, 4.8, fSize);
+	binary_search(cArray, "R", cSize);
+
+	cout << "Замена элемента в массиве " << endl;
+	change_(iArray, 20, 4, iSize);
+	change_(dArray, 20.45, 3, dSize);
+	change_(fArray, 2.345, 8, fSize);
+	change_(cArray, "c", 2, cSize);
+
+	cout << "Bubble sort: " << endl;
+	bubbleSort(iArray, iSize);
+	bubbleSort(dArray, dSize);
+	bubbleSort(fArray, fSize);
+	return 0;
+}
+
