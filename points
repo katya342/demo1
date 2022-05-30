@@ -1,0 +1,127 @@
+#include <iostream>
+using namespace std;
+const size_t SIZE = 100;              // размер массива, хранящего координаты точек
+class point
+{
+public:
+	point();                       //конструктор по умолч
+	point(int x, int y);           // конструктор, принимающий на вход координаты точек 
+	int get_x();                   // геттер для x
+	int get_y();                      //геттер для y
+	void show();                    // метод вывода координат x, y
+
+private:
+	int _x;                    // поля данных координат
+	int _y;
+};
+
+class points
+{
+public:
+	points();                           // конструктор по умолчанию
+	void set_point(point pnt);             //
+	void show();
+	void find();
+
+
+private:
+	point _points[SIZE];                   // массив для хранения координат точек
+	size_t _index;                         // индекс массива с точками
+};
+
+
+///////////////////
+
+#include"Pointers.h"
+point::point()
+{
+
+	this->_x = 0;
+	this->_y = 0;
+}
+
+point::point(int x, int y)
+{
+	this->_x = x;
+	this->_y = y;
+}
+
+int point::get_x()
+{
+	
+	return this->_x;
+}
+
+int point::get_y()
+{
+	
+	return this->_y;
+}
+
+void point::show()
+{
+	
+	cout << this->_x << " " << this->_y << endl;
+}
+
+points::points()
+{
+	this->_index = 0;
+}
+
+void points::set_point(point pnt)
+{
+	if (_index < SIZE) {
+		_points[_index] = pnt;
+		_index++;
+	}
+}
+void points::show()
+{
+	for (size_t i = 0; i < SIZE; i++)
+		_points[i].show();
+}
+
+void points::find()
+{
+	double distance;
+	int sum = 0;
+	for (size_t i = 0; i < SIZE; i++) {
+		_points[i].get_x();
+		_points[i].get_y();
+		for (size_t j = 0; j < SIZE; j++) {
+			_points[j].get_x();
+			_points[j].get_y();
+			distance = sqrt(pow(_points[j].get_x() - _points[i].get_x(), 2) + pow(_points[j].get_y() - _points[i].get_y(), 2));
+		}
+	}
+	cout << distance;
+}
+
+////////////////////////
+
+#include <iostream>
+#include "Pointers.h"
+#include <math.h>
+using namespace std;
+int const size = 100;
+int main()
+{
+	setlocale(LC_ALL, "Russian");
+	srand(time(NULL));
+
+	points pnts;                                       
+
+	for (size_t i = 0; i < SIZE; i++)                                   
+	{
+		
+		point pnt(rand() % SIZE, rand() % SIZE);         // вызов конструктора класса point, принимающий параметры значения x, y
+		pnts.set_point(pnt);                           
+	}
+		pnts.show();        // вызов метода для выввода координат точек, хранящихся в массиве _points[i]
+		pnts.find();
+	return 0;
+
+
+    
+}
