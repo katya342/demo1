@@ -1,0 +1,123 @@
+#include "Date.h"
+#include <ctime>
+using namespace std;
+
+Date::Date()
+{
+	this->sec = 0;                                  //1day = 86400sec, 1month = 2592000sec, 1year = 31536000sec
+}
+
+Date::Date(int day, int month, int year)
+{
+	this->sec = day * 86400 + month * 2592000 + year * 31536000;
+}
+
+
+
+unsigned long int Date::operator+(int days)
+{
+	return this->sec + days *86400;
+}
+
+unsigned long int Date::operator-(const Date& other)
+{
+	return (this->sec - other.sec)/86400;
+}
+
+unsigned long int Date::operator+=(int days)
+{
+	return this->sec += days * 86400;
+}
+
+unsigned long int Date::operator=(int days)
+{
+	return this->sec = days * 86400;
+}
+
+bool Date::operator<(const Date& other)
+{
+	return(this->sec < other.sec);
+}
+
+bool Date::operator>(const Date& other)
+{
+	return (this->sec > other.sec);
+}
+
+bool Date::operator==(const Date& other)
+{
+	return (this->sec == other.sec);
+}
+
+bool Date::operator!=(const Date& other)
+{
+	return (this->sec != other.sec);
+}
+
+void Date::current_time()
+{
+	cout << __DATE__ << " " << __TIME__;
+}
+
+void Date::show()
+{
+	long long int day, month, year;
+	day = (this->sec - year * 31536000 - month * 2592000) / 86400;       // sec = year* 3153600 + month*2592000 + day*86400
+	month = (this->sec - year * 31536000 - day * 86400) / 2592000;
+	year = (this->sec - month * 2592000 - day * 86400) / 31536000;
+	cout << day << "." << month << "." << year << endl;
+}
+
+
+
+#include <iostream>
+#include <ctime>
+using namespace std;
+class Date
+{
+private:
+	long long sec;                                        // 1 day = 24 h = 1440 min = 86400 sec
+	
+public:
+	Date();                                             
+	Date(int day, int month, int year);                  
+	unsigned long int operator+(int days);
+	unsigned long int operator-(const Date& other);
+	unsigned long int operator+=(int days);
+	unsigned long int operator=(int days);
+	bool operator<(const Date& other);
+	bool operator>(const Date& other);
+	bool operator==(const Date& other);
+	bool operator!=(const Date& other);
+	void current_time();
+	void show();
+	
+};
+
+#include <iostream>
+#include <ctime>
+#include "Date.h"
+
+using namespace std;
+int main()
+{
+	setlocale(LC_ALL, "RUSSIAN");
+	Date();
+	Date cur(4, 5, 2017); 
+	Date bh(1, 2, 1999);
+	cout << "С вашего дня рождения прошло " << (cur - bh) << " секунд \n";
+	cur.show();
+	cur = cur + 5;
+	cur += 5;
+	cur.show();	// 14.05.2017
+	cin.get(); cin.get();
+	cur.current_time();
+}
+
+
+
+
+
+
+
+
